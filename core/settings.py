@@ -11,7 +11,7 @@ SECRET_KEY = '7n_#s-dkcplf8+x7_n_u)zas*ivto-d)h!9ovg2e*crhh^h5_h'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     # developed apps
     'authentication',
     'todo',
+    'common'
 ]
 
 MIDDLEWARE = [
@@ -124,6 +125,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'EXCEPTION_HANDLER': 'common.utils.exception_errors_format_handler',
     'PAGE_SIZE': 10
 }
 

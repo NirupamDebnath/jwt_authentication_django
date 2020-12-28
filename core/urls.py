@@ -11,5 +11,6 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('auth/', include(('authentication.urls',
                            "authentication"), namespace='authentication')),
+    path('todo/', include(('todo.urls', 'todo'), namespace='todo')),
     path('__debug__/', include(debug_toolbar.urls)),
 ]

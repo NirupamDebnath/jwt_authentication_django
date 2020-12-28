@@ -31,7 +31,7 @@ def decode_token(token: bytes, secret: str) -> dict:
             "Authentication failed. Invalid refresh token.")
     except jwt.ExpiredSignatureError as identifier:
         raise exceptions.AuthenticationFailed(
-            "Authentication failed. Refresh token expired.")
+            "Authentication failed. Token expired.")
 
 
 def get_token_for_user(user: User, secret: str, minutes: int) -> bytes:

@@ -22,12 +22,16 @@ class JWTAuthentication(authentication.BaseAuthentication):
 
         User = get_user_model()
         try:
-            user = User.objects.get(payload.get("pk", ""))
+            user = User.objects.get(username=payload.get("username", ""))
         except ObjectDoesNotExist:
             logger.exception(
                 "User doesn't exists for user.pk : {}".format(
                     payload.get("pk", "")))
 
+            raise exceptions.AuthenticationFailed(
+                "Authentication failed.")
+        except Exception:
+            logger.exception("Authentication exception")
             raise exceptions.AuthenticationFailed(
                 "Authentication failed.")
 
