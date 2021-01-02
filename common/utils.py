@@ -5,7 +5,7 @@ from rest_framework.views import exception_handler
 from rest_framework.settings import api_settings
 from rest_framework import exceptions
 
-from django.core.exceptions import ValidationError
+from django.core.exceptions import ValidationError, ObjectDoesNotExist
 
 
 def create_serializer_class(name, fields):
@@ -60,6 +60,8 @@ class ApiErrorsMixin:
             drf_exception = drf_exception_class(get_error_message(exc))
 
             return super().handle_exception(drf_exception)
+        elif isinstance(exc, ObjectDoesNotExist):
+            return super().handle_exception(rest_exceptions.ValidationError(get_error_message(exc)))
 
         return super().handle_exception(exc)
 

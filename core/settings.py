@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     # third party apps
     'rest_framework',
     'debug_toolbar',
+    'django_filters',
 
     # developed apps
     'authentication',

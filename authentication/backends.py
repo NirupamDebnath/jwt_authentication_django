@@ -14,8 +14,7 @@ class JWTAuthentication(authentication.BaseAuthentication):
         auth_data = authentication.get_authorization_header(request)
         if auth_data is None or auth_data == b'':
             return None
-
-        logger.info(auth_data)
+        # logger.info(auth_data)
 
         _, token = auth_data.decode('utf-8').split(' ')
         payload = decode_access_token(token)

@@ -46,8 +46,8 @@ def get_token_for_user(user: User, secret: str, minutes: int) -> bytes:
 
 
 def get_token_pair_for_user(user: User) -> Tuple[bytes, bytes]:
-    access = get_token_for_user(user, config("JWT_SECRET"), 5)
-    refresh = get_token_for_user(user, config("JET_REFRESH_SECRET"), 60)
+    access = get_token_for_user(user, config("JWT_SECRET"), 60)
+    refresh = get_token_for_user(user, config("JET_REFRESH_SECRET"), 120)
     return access, refresh
 
 
@@ -57,8 +57,8 @@ def decode_access_token(token):
 
 def refresh_token_pair(refresh_token: bytes) -> Tuple[bytes, bytes]:
     payload = decode_token(refresh_token, config("JET_REFRESH_SECRET"))
-    payload['exp'] = timezone.now() + datetime.timedelta(minutes=5)
-    access = get_token(payload, config("JWT_SECRET"))
     payload['exp'] = timezone.now() + datetime.timedelta(minutes=60)
+    access = get_token(payload, config("JWT_SECRET"))
+    payload['exp'] = timezone.now() + datetime.timedelta(minutes=120)
     refresh = get_token(payload, config("JET_REFRESH_SECRET"))
     return access, refresh
