@@ -174,7 +174,7 @@ LOGGING = {
     },
     'loggers': {
         'django': {
-            'handlers': ['console', 'django_core'],
+            'handlers': ['django_core'],
             'level': 'WARNING',
             'propagate': False,
         },

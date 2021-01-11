@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from common.utils import ApiErrorsMixin
 
 from .services import (task_create, task_update_for_user, task_delete_for_user)
-from .selectors import task_get_by_id, task_get, task_list_for_user
+from .selectors import task_get_by_id, task_get_for_user, task_list_for_user
 from .pagination import get_paginated_response, LimitOffsetPagination
 
 
@@ -65,7 +65,7 @@ class TaskDetailApi(ApiErrorsMixin, APIView):
                       "expiry_time", "is_completed")
 
     def get(self, request, task_id):
-        task = task_get(task_id, request.user)
+        task = task_get_for_user(task_id=task_id, user=request.user)
         serializer = self.OutputSerializer(task)
 
         return Response(serializer.data)
@@ -116,8 +116,7 @@ class TaskDeleteApi(ApiErrorsMixin, APIView):
 
     def delete(self, request, task_id):
         task = task_get_by_id(task_id)
-        task_delete_for_user(task=task, user=request.user)
+        task = task_delete_for_user(task=task, user=request.user)
         serializer = self.OutputSerializer(task)
         data = serializer.data
-        data["message"] = "Deleted Successfully"
         return Response(data=data, status=status.HTTP_200_OK)

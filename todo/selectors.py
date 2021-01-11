@@ -13,7 +13,7 @@ def task_get_by_id(id: int) -> Task:
     return Task.objects.get(pk=id)
 
 
-def task_get(task_id: int, user: User) -> Task:
+def task_get_for_user(task_id: int, user: User) -> Task:
     task = task_get_by_id(task_id)
     task_check_permission(task, user)
     return task
